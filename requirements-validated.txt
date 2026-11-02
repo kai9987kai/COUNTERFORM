@@ -1,0 +1,6 @@
+# Versions present for this build; receipts record exact numerical versions.
+numpy==2.4.3
+scipy==1.17.1
+fastapi==0.137.1
+uvicorn==0.49.0
+pydantic==2.13.4

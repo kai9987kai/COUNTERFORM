@@ -1,0 +1,13 @@
+world,seed,comparison,reduction_delta_pp,design_rms_delta_m,worst_reduction_delta_pp
+cubic,11,counterform-minus-active,0.0,0.0,0.0
+cubic,11,counterform-minus-random,0.28636458532750453,-0.000363440409857238,-0.8833331313337087
+cubic,11,counterform-minus-passive,0.192357857423044,-0.00024413150970165054,-0.5956288764897852
+cubic,23,counterform-minus-active,0.0,0.0,0.0
+cubic,23,counterform-minus-random,0.023270646074635692,-3.465783613249007e-05,0.004820516666947938
+cubic,23,counterform-minus-passive,0.1270166070934664,-0.0001891705430366042,0.025761458372675072
+unmodelled,11,counterform-minus-active,0.0,0.0,0.0
+unmodelled,11,counterform-minus-random,7.115361646944116,-0.003354321069402408,-6.50513400806777
+unmodelled,11,counterform-minus-passive,0.5280571079292358,-0.00024893648009240155,0.21022270098603002
+unmodelled,23,counterform-minus-active,0.0,0.0,0.0
+unmodelled,23,counterform-minus-random,3.3587864718510723,-0.0015341987318848033,-7.517188329666002
+unmodelled,23,counterform-minus-passive,-1.2130762594546702,0.0005540989504787541,-0.19803147783564734

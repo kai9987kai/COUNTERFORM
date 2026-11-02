@@ -1,0 +1,5 @@
+# Preserve source digests, canonical receipts and archive inputs across platforms.
+* -text
+*.pdf binary
+*.zip binary
+*.png binary

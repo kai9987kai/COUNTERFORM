@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>COUNTERFORM evidence</title>
+<style>body{background:#171a1d;color:#e7e4da;font:16px system-ui;max-width:1000px;margin:50px auto;padding:0 24px}h1{letter-spacing:.08em}small,p{color:#b7b6ae}table{width:100%;border-collapse:collapse;margin:24px 0}td,th{padding:10px;text-align:left;border-bottom:1px solid #3b3e40}code{overflow-wrap:anywhere}svg{width:100%;background:#202428;border:1px solid #404244}pre{white-space:pre-wrap;overflow-wrap:anywhere}a{color:#daaf48}</style>
+<h1>COUNTERFORM</h1><p>Local synthetic evidence report · v0.1.0</p>
+<p>Finite model selection and conceptual absorber design. This report establishes neither a novel research result nor real-world engineering reliability.</p>
+<h2>Configuration</h2><pre>{
+  &quot;seed&quot;: 42,
+  &quot;world&quot;: &quot;cubic&quot;,
+  &quot;strategy&quot;: &quot;counterform&quot;,
+  &quot;budget&quot;: 5,
+  &quot;noise&quot;: 0.01
+}</pre>
+<h2>Computed outcome</h2><table><tr><td>reduction_pct</td><td>24.04556105561506</td></tr><tr><td>baseline_rms</td><td>0.12530993347056893</td></tr><tr><td>design_rms</td><td>0.09517845690915266</td></tr><tr><td>worst_reduction_pct</td><td>-8.350559750642228</td></tr><tr><td>adequate</td><td>True</td></tr><tr><td>verdict</td><td>At least one finite candidate passes the independent audit. Held-out results remain conditional on this synthetic challenge set.</td></tr><tr><td>best_model</td><td>cubic</td></tr><tr><td>constraint_violations</td><td>0</td></tr></table>
+<h2>Approximate frequency response</h2><p>Grey: baseline · amber: selected · blue: nominal. Horizontal axis: increasing angular frequency (rad/s); vertical axis: peak displacement (m) under 1.5 N forcing. Search approximation, separate from nonlinear challenges.</p><svg viewBox="0 0 760 240" role="img" aria-label="Frequency response comparison"><polyline points="30.00,186.97 41.67,186.27 53.33,185.51 65.00,184.69 76.67,183.82 88.33,182.87 100.00,181.84 111.67,180.73 123.33,179.53 135.00,178.23 146.67,176.81 158.33,175.27 170.00,173.58 181.67,171.75 193.33,169.74 205.00,167.54 216.67,165.13 228.33,162.49 240.00,159.59 251.67,156.42 263.33,152.95 275.00,149.17 286.67,145.06 298.33,140.61 310.00,135.83 321.67,130.73 333.33,125.32 345.00,119.65 356.67,113.73 368.33,107.62 380.00,101.35 391.67,94.96 403.33,88.48 415.00,81.95 426.67,75.39 438.33,68.82 450.00,62.27 461.67,55.73 473.33,49.23 485.00,42.77 496.67,36.36 508.33,30.00 520.00,149.13 531.67,158.90 543.33,165.55 555.00,170.64 566.67,174.75 578.33,178.18 590.00,181.11 601.67,183.65 613.33,185.89 625.00,187.87 636.67,189.65 648.33,191.25 660.00,192.70 671.67,194.02 683.33,195.23 695.00,196.35 706.67,197.37 718.33,198.32 730.00,199.20" fill="none" stroke="#a1a4ac" stroke-width="2"/><polyline points="30.00,184.51 41.67,183.45 53.33,182.28 65.00,181.00 76.67,179.57 88.33,178.00 100.00,176.24 111.67,174.29 123.33,172.12 135.00,169.71 146.67,167.02 158.33,164.05 170.00,160.78 181.67,157.24 193.33,153.46 205.00,149.54 216.67,145.63 228.33,141.96 240.00,138.78 251.67,136.34 263.33,134.81 275.00,134.23 286.67,134.52 298.33,135.47 310.00,136.86 321.67,138.46 333.33,140.10 345.00,141.66 356.67,143.08 368.33,144.31 380.00,145.34 391.67,146.18 403.33,146.85 415.00,147.36 426.67,147.73 438.33,147.99 450.00,148.14 461.67,148.20 473.33,148.20 485.00,148.14 496.67,148.03 508.33,147.88 520.00,164.97 531.67,169.25 543.33,172.68 555.00,175.64 566.67,178.27 578.33,180.63 590.00,182.79 601.67,184.76 613.33,186.57 625.00,188.23 636.67,189.77 648.33,191.20 660.00,192.51 671.67,193.74 683.33,194.88 695.00,195.94 706.67,196.94 718.33,197.86 730.00,198.73" fill="none" stroke="#daaf48" stroke-width="2"/><polyline points="30.00,184.51 41.67,183.45 53.33,182.28 65.00,181.00 76.67,179.57 88.33,178.00 100.00,176.24 111.67,174.29 123.33,172.12 135.00,169.71 146.67,167.02 158.33,164.05 170.00,160.78 181.67,157.24 193.33,153.46 205.00,149.54 216.67,145.63 228.33,141.96 240.00,138.78 251.67,136.34 263.33,134.81 275.00,134.23 286.67,134.52 298.33,135.47 310.00,136.86 321.67,138.46 333.33,140.10 345.00,141.66 356.67,143.08 368.33,144.31 380.00,145.34 391.67,146.18 403.33,146.85 415.00,147.36 426.67,147.73 438.33,147.99 450.00,148.14 461.67,148.20 473.33,148.20 485.00,148.14 496.67,148.03 508.33,147.88 520.00,164.97 531.67,169.25 543.33,172.68 555.00,175.64 566.67,178.27 578.33,180.63 590.00,182.79 601.67,184.76 613.33,186.57 625.00,188.23 636.67,189.77 648.33,191.20 660.00,192.51 671.67,193.74 683.33,194.88 695.00,195.94 706.67,196.94 718.33,197.86 730.00,198.73" fill="none" stroke="#76b2ba" stroke-width="2"/></svg>
+<h2>Held-out challenges</h2><table><tr><th>Condition</th><th>Baseline RMS (m)</th><th>Selected RMS (m)</th><th>Reduction</th></tr><tr><td>Shifted frequency</td><td>0.077283</td><td>0.083737</td><td>-8.35%</td></tr><tr><td>High load and harmonic</td><td>0.19065</td><td>0.12593</td><td>33.95%</td></tr><tr><td>Component tolerance</td><td>0.069188</td><td>0.065628</td><td>5.15%</td></tr></table>
+<h2>Validation</h2><pre>{
+  &quot;solver_relative_error&quot;: 3.493355280309978e-09,
+  &quot;audit_threshold&quot;: 0.1,
+  &quot;held_out&quot;: true,
+  &quot;audit_experiments&quot;: 2,
+  &quot;design_grid_size&quot;: 30,
+  &quot;selected_grid_index&quot;: 20,
+  &quot;nominal_grid_index&quot;: 20,
+  &quot;known_primary_mass&quot;: 1.0,
+  &quot;solver_methods&quot;: [
+    &quot;DOP853&quot;,
+    &quot;Radau&quot;
+  ],
+  &quot;rms_window_seconds&quot;: [
+    7.0,
+    14.0
+  ],
+  &quot;notes&quot;: [
+    &quot;Audit observations never enter fitting, acquisition, design search or coefficient updates; the selected design is frozen first.&quot;,
+    &quot;Held-out challenge settings are fixed and are never used for selection.&quot;,
+    &quot;Oracle is the retrospective unconstrained minimum within the same 30-design grid, separately for each challenge.&quot;,
+    &quot;Relative model weights use a BIC-style complexity penalty; weights do not prove adequacy.&quot;,
+    &quot;Design response is an approximation; nonlinear held-out simulation owns reported reductions.&quot;,
+    &quot;Solver agreement is measured on the first held-out selected-design trajectory, not every grid member.&quot;
+  ]
+}</pre>
+<h2>Limits</h2><ul><li>Instrumented synthetic one-dimensional oscillator with known mass; this is not identification from video or physical hardware.</li><li>Finite hand-authored candidate laws and bounded coefficient fits; no free-form symbolic discovery or learned neural model.</li><li>COUNTERFORM uses a decision-sensitive predictive-disagreement heuristic, not exact Bayesian information gain or an established research benefit.</li><li>Sensor-noise regression has errors-in-variables bias; relative model weights are not calibrated probabilities.</li><li>Adequacy threshold is a fixed engineering diagnostic with a noise allowance, not a calibrated hypothesis test.</li><li>Frequency-response search uses a lowest-branch describing-function approximation and can miss nonlinear jumps, transients and hysteresis.</li><li>The finite design grid and three deterministic challenge protocols are narrow; reductions may be negative and do not establish deployment reliability.</li><li>The 7–14 second RMS window retains transient effects; steady-state convergence is not established.</li><li>Grid oracle knows the held-out simulator retrospectively and is a diagnostic, not an attainable acquisition strategy.</li><li>Conceptual absorber parameters and displacement limits are illustrative; no manufacturing, fatigue, stability or safety qualification is provided.</li></ul><p>STL/CAD exports are schematic, in millimetres, and not manufacturing specifications.</p>
+<h2>Provenance</h2><pre>{
+  &quot;counterform&quot;: &quot;0.1.0&quot;,
+  &quot;python&quot;: &quot;3.12.10&quot;,
+  &quot;numpy&quot;: &quot;2.4.3&quot;,
+  &quot;scipy&quot;: &quot;1.17.1&quot;,
+  &quot;source_sha256&quot;: &quot;a5473db2b27e2c8188ca63d922dd4bedc1f0a7341c6d1cb316a4e77a0ba75dc0&quot;
+}</pre><p>Result SHA-256: <code>674194079aa121b2109a5595c50eaa8d9449fa6c2f455b8e30ac123f24f7d068</code></p>
+<p>Checksums detect changes relative to the manifest; they do not authenticate an author. Use the receipt and CLI replay to recompute numerical evidence.</p></html>

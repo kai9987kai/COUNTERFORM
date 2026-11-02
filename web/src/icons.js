@@ -1,0 +1,20 @@
+const paths = {
+  mark: '<path d="M19 4H9l-5 8 5 8h10M14 7l-3 5 3 5m6-10-3 5 3 5"/>',
+  lab: '<path d="M9 3h6m-5 0v6l-6 10a1.3 1.3 0 0 0 1.1 2h13.8a1.3 1.3 0 0 0 1.1-2L14 9V3M8 14h8"/>',
+  evidence: '<path d="M7 3h10l3 3v15H4V3h3m1 5h8M8 12h8m-8 4h5"/>',
+  protocol: '<path d="m4 5 8-2 8 2v15l-8-2-8 2V5m8-2v15"/>',
+  arrow: '<path d="M5 12h14m-6-6 6 6-6 6"/>',
+  external: '<path d="M14 4h6v6m0-6L10 14M9 4H4v16h16v-5"/>',
+  download: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
+  history: '<path d="M3 10a9 9 0 1 1 2 8M3 4v6h6m3-3v6l4 2"/>',
+  play: '<path d="m8 5 11 7-11 7V5Z"/>',
+  pause: '<path d="M8 5v14M16 5v14"/>',
+  reset: '<path d="M4 9a8 8 0 1 1 0 6M4 3v6h6"/>',
+  close: '<path d="m6 6 12 12M6 18 18 6"/>',
+  chevron: '<path d="m8 10 4 4 4-4"/>',
+  check: '<path d="m5 12 4 4L19 6"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.1"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>',
+  layers: '<path d="m12 3 10 5-10 5L2 8l10-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/>',
+};
+export const icon = (name, cls = '') => `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.info}</svg>`;

@@ -1,0 +1,118 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>COUNTERFORM evidence</title>
+<style>body{background:#171a1d;color:#e7e4da;font:16px system-ui;max-width:1000px;margin:50px auto;padding:0 24px}h1{letter-spacing:.08em}small,p{color:#b7b6ae}table{width:100%;border-collapse:collapse;margin:24px 0}td,th{padding:10px;text-align:left;border-bottom:1px solid #3b3e40}code{overflow-wrap:anywhere}svg{width:100%;background:#202428;border:1px solid #404244}pre{white-space:pre-wrap;overflow-wrap:anywhere}a{color:#daaf48}</style>
+<h1>COUNTERFORM</h1><p>Local synthetic evidence report · simulation v0.2.0 · exporter v0.2.0</p>
+<p>Finite model selection and conceptual absorber design. This report establishes neither a novel research result nor real-world engineering reliability.</p>
+<h2>Configuration</h2><pre>{
+  &quot;seed&quot;: 101,
+  &quot;world&quot;: &quot;unmodelled&quot;,
+  &quot;strategy&quot;: &quot;active&quot;,
+  &quot;budget&quot;: 4,
+  &quot;noise&quot;: 0.01
+}</pre>
+<h2>Recommendation: abstain</h2><p>Abstain from recommending the exploratory absorber; use the no-absorber control in the recommendation comparison.</p><ul><li>No single frozen fitted law passes both force-balance and free-running trajectory audits on every trial.</li></ul><p>Recorded recommendation control: no_absorber. Selected-design reductions below remain exploratory outcomes when the recommendation abstains.</p>
+<h2>Computed outcome</h2><table><tr><td>reduction_pct</td><td>29.45117277175181</td></tr><tr><td>baseline_rms</td><td>0.045951360531387375</td></tr><tr><td>design_rms</td><td>0.03241814595031791</td></tr><tr><td>worst_reduction_pct</td><td>3.780240493398024</td></tr><tr><td>adequate</td><td>False</td></tr><tr><td>verdict</td><td>All frozen fitted laws rejected by at least one independent diagnostic; the absorber remains exploratory.</td></tr><tr><td>best_model</td><td>friction_drag</td></tr><tr><td>constraint_violations</td><td>0</td></tr></table>
+<h2>Frozen model audits</h2><p>Passing flags are finite engineering diagnostics. Missing historical forecast fields are not inferred.</p><table><tr><th>Law</th><th>Force NRMSE</th><th>Force audit</th><th>Forecast NRMSE</th><th>Forecast audit</th><th>Recorded adequacy</th></tr><tr><td>linear</td><td>0.15243816039833938</td><td>reject</td><td>0.4434164264691137</td><td>reject</td><td>reject</td></tr><tr><td>drag</td><td>0.15243816039833713</td><td>reject</td><td>0.4434164264691264</td><td>reject</td><td>reject</td></tr><tr><td>friction</td><td>0.04811555240370166</td><td>reject</td><td>0.074293058553762</td><td>pass</td><td>reject</td></tr><tr><td>friction_drag</td><td>0.042924327436068846</td><td>reject</td><td>0.059954306476056006</td><td>pass</td><td>reject</td></tr><tr><td>cubic</td><td>0.15053454842232725</td><td>reject</td><td>0.43248777912663305</td><td>reject</td><td>reject</td></tr><tr><td>cubic_drag</td><td>0.1505345484223247</td><td>reject</td><td>0.43248777912664677</td><td>reject</td><td>reject</td></tr><tr><td>cubic_friction</td><td>0.042634349936597614</td><td>reject</td><td>0.07292633259627763</td><td>pass</td><td>reject</td></tr><tr><td>cubic_friction_drag</td><td>0.03676029081924734</td><td>reject</td><td>0.05958896615442928</td><td>pass</td><td>reject</td></tr></table>
+<h2>Acquisition diagnostics</h2><p>All retained candidate scores, fantasy assumptions and selection flags are available in the receipt; negative gains are retained.</p><table><tr><th>Experiment</th><th>rad/s</th><th>N</th><th>Score definition</th><th>Score</th><th>Menu candidates</th></tr><tr><td>1</td><td>3.4</td><td>0.35</td><td>shared warmup schedule</td><td>0.0</td><td>0</td></tr><tr><td>2</td><td>5.7</td><td>1.8</td><td>predicted peak-displacement variance</td><td>0.028036660002568038</td><td>15</td></tr><tr><td>3</td><td>5.7</td><td>1.0</td><td>predicted peak-displacement variance</td><td>8.13559944788231e-06</td><td>14</td></tr><tr><td>4</td><td>4.6</td><td>1.0</td><td>predicted peak-displacement variance</td><td>8.609971220771682e-06</td><td>13</td></tr></table>
+<h2>Approximate frequency response</h2><p>Grey: baseline · amber: selected · blue: nominal. Horizontal axis: increasing angular frequency (rad/s); vertical axis: peak displacement (m) under 1.5 N forcing. Search approximation, separate from nonlinear challenges.</p><svg viewBox="0 0 760 240" role="img" aria-label="Frequency response comparison"><polyline points="30.00,105.53 41.67,103.76 53.33,101.88 65.00,99.86 76.67,97.71 88.33,95.42 100.00,92.99 111.67,90.41 123.33,87.69 135.00,84.81 146.67,81.78 158.33,78.59 170.00,75.26 181.67,71.77 193.33,68.16 205.00,64.42 216.67,60.60 228.33,56.72 240.00,52.82 251.67,48.97 263.33,45.24 275.00,41.70 286.67,38.46 298.33,35.60 310.00,33.24 321.67,31.46 333.33,30.36 345.00,30.00 356.67,30.42 368.33,31.64 380.00,33.64 391.67,36.38 403.33,39.80 415.00,43.82 426.67,48.33 438.33,53.25 450.00,58.47 461.67,63.88 473.33,69.42 485.00,74.98 496.67,80.51 508.33,85.96 520.00,91.27 531.67,96.43 543.33,101.39 555.00,106.16 566.67,110.72 578.33,115.07 590.00,119.20 601.67,123.13 613.33,126.86 625.00,130.40 636.67,133.75 648.33,136.92 660.00,139.93 671.67,142.78 683.33,145.48 695.00,148.04 706.67,150.47 718.33,152.78 730.00,154.97" fill="none" stroke="#a1a4ac" stroke-width="2"/><polyline points="30.00,100.77 41.67,98.47 53.33,95.99 65.00,93.33 76.67,90.48 88.33,87.46 100.00,84.26 111.67,80.91 123.33,77.44 135.00,73.92 146.67,70.44 158.33,67.13 170.00,64.20 181.67,61.90 193.33,60.54 205.00,60.47 216.67,61.98 228.33,65.23 240.00,70.13 251.67,76.34 263.33,83.27 275.00,90.24 286.67,96.63 298.33,101.95 310.00,105.95 321.67,108.58 333.33,109.95 345.00,110.25 356.67,109.75 368.33,108.68 380.00,107.28 391.67,105.76 403.33,104.29 415.00,102.99 426.67,101.98 438.33,101.33 450.00,101.10 461.67,101.32 473.33,101.98 485.00,103.08 496.67,104.57 508.33,106.42 520.00,108.58 531.67,110.98 543.33,113.58 555.00,116.32 566.67,119.16 578.33,122.06 590.00,124.98 601.67,127.88 613.33,130.76 625.00,133.58 636.67,136.34 648.33,139.02 660.00,141.62 671.67,144.13 683.33,146.55 695.00,148.88 706.67,151.12 718.33,153.26 730.00,155.32" fill="none" stroke="#daaf48" stroke-width="2"/><polyline points="30.00,100.77 41.67,98.47 53.33,95.99 65.00,93.33 76.67,90.48 88.33,87.46 100.00,84.26 111.67,80.91 123.33,77.44 135.00,73.92 146.67,70.44 158.33,67.13 170.00,64.20 181.67,61.90 193.33,60.54 205.00,60.47 216.67,61.98 228.33,65.23 240.00,70.13 251.67,76.34 263.33,83.27 275.00,90.24 286.67,96.63 298.33,101.95 310.00,105.95 321.67,108.58 333.33,109.95 345.00,110.25 356.67,109.75 368.33,108.68 380.00,107.28 391.67,105.76 403.33,104.29 415.00,102.99 426.67,101.98 438.33,101.33 450.00,101.10 461.67,101.32 473.33,101.98 485.00,103.08 496.67,104.57 508.33,106.42 520.00,108.58 531.67,110.98 543.33,113.58 555.00,116.32 566.67,119.16 578.33,122.06 590.00,124.98 601.67,127.88 613.33,130.76 625.00,133.58 636.67,136.34 648.33,139.02 660.00,141.62 671.67,144.13 683.33,146.55 695.00,148.88 706.67,151.12 718.33,153.26 730.00,155.32" fill="none" stroke="#76b2ba" stroke-width="2"/></svg>
+<h2>Held-out challenges</h2><table><tr><th>Condition</th><th>Baseline RMS (m)</th><th>Selected RMS (m)</th><th>Reduction</th></tr><tr><td>Shifted frequency</td><td>0.036601</td><td>0.018298</td><td>50.01%</td></tr><tr><td>High load and harmonic</td><td>0.063033</td><td>0.043266</td><td>31.36%</td></tr><tr><td>Component tolerance</td><td>0.031966</td><td>0.030757</td><td>3.78%</td></tr></table>
+<h2>Validation</h2><pre>{
+  &quot;solver_relative_error&quot;: 2.7945863662309756e-08,
+  &quot;solver_scope&quot;: &quot;first held-out challenge baseline and selected displacement trajectories only; not all designs or challenges&quot;,
+  &quot;solver_checks&quot;: [
+    {
+      &quot;control&quot;: &quot;baseline&quot;,
+      &quot;challenge&quot;: &quot;Shifted frequency&quot;,
+      &quot;relative_error&quot;: 2.7945863662309756e-08,
+      &quot;methods&quot;: [
+        &quot;DOP853&quot;,
+        &quot;Radau&quot;
+      ]
+    },
+    {
+      &quot;control&quot;: &quot;selected&quot;,
+      &quot;challenge&quot;: &quot;Shifted frequency&quot;,
+      &quot;relative_error&quot;: 1.0557649281892773e-08,
+      &quot;methods&quot;: [
+        &quot;DOP853&quot;,
+        &quot;Radau&quot;
+      ]
+    }
+  ],
+  &quot;solver_methods&quot;: [
+    &quot;DOP853&quot;,
+    &quot;Radau&quot;
+  ],
+  &quot;held_out&quot;: true,
+  &quot;audit_threshold&quot;: 0.1,
+  &quot;force_threshold&quot;: 0.1,
+  &quot;forecast_threshold&quot;: 0.18,
+  &quot;audit_experiments&quot;: 2,
+  &quot;acquisition_experiments&quot;: 4,
+  &quot;forecast_audit_experiments&quot;: 2,
+  &quot;design_grid_size&quot;: 30,
+  &quot;design_grid_id&quot;: &quot;physical-30-ref6-v1&quot;,
+  &quot;selected_grid_index&quot;: 19,
+  &quot;nominal_grid_index&quot;: 19,
+  &quot;known_primary_mass&quot;: 1.0,
+  &quot;rms_window_seconds&quot;: [
+    7.0,
+    14.0
+  ],
+  &quot;integration&quot;: {
+    &quot;horizon_seconds&quot;: 14.0,
+    &quot;samples&quot;: 421,
+    &quot;rtol&quot;: 2e-08,
+    &quot;atol&quot;: 2e-10,
+    &quot;max_step&quot;: 0.08
+  },
+  &quot;coefficient_bounds&quot;: {
+    &quot;k&quot;: [
+      5.0,
+      80.0
+    ],
+    &quot;c&quot;: [
+      0.015,
+      5.0
+    ],
+    &quot;alpha&quot;: [
+      0.0,
+      1500.0
+    ],
+    &quot;friction&quot;: [
+      0.0,
+      3.0
+    ],
+    &quot;drag&quot;: [
+      0.0,
+      8.0
+    ]
+  },
+  &quot;audit_normalisation&quot;: &quot;force RMS/max(measured force-balance RMS,0.1N); forecast position RMS/max(measured position RMS,0.02m), entire14s&quot;,
+  &quot;audit_aggregation&quot;: &quot;every trial passes both criteria for the same fitted family; forecast_nrmse is worst trial&quot;,
+  &quot;operational_budgets&quot;: {
+    &quot;acquisition_trials&quot;: 4,
+    &quot;audit_trials&quot;: 2,
+    &quot;challenge_conditions&quot;: 3,
+    &quot;designs_per_challenge&quot;: 32,
+    &quot;independent_solver_checks&quot;: 2,
+    &quot;maximum_menu_candidates&quot;: 15,
+    &quot;fantasies_per_candidate&quot;: 72
+  },
+  &quot;notes&quot;: [
+    &quot;Audit and challenge data never enter fitting, acquisition or design selection; designs freeze before both audits.&quot;,
+    &quot;Recommendation is frozen before nonlinear challenges and uses audit diagnostics plus pre-challenge predicted loss only.&quot;,
+    &quot;The same fixed physical 30-design grid is used across strategies, worlds and fantasy updates.&quot;,
+    &quot;Per-challenge oracle is unconstrained and retrospective; common oracle enforces all declared challenge constraints across one design.&quot;,
+    &quot;Gaussian response likelihood, particle perturbations, scoring effective count and audit thresholds are engineering conventions, not calibrated inference.&quot;,
+    &quot;Unmodelled is the historical world identifier; its cubic/friction/drag combination is represented in v0.2. Memory remains outside the instantaneous library.&quot;
+  ]
+}</pre>
+<h2>Limits</h2><ul><li>Finite instrumented synthetic oscillator with directly measured x/v/a/force and known1kg mass; no hardware validation.</li><li>Eight predetermined instantaneous compositions and bounded coefficient fits; no unrestricted symbolic or neural discovery.</li><li>Errors-in-variables bias is unresolved; parameter intervals are sensitivity ranges, not confidence intervals.</li><li>One-step risk acquisition uses approximate peak response, heuristic weights and three-point quadrature; it is not exact Bayesian value of information.</li><li>Fantasy reweighting holds current particles fixed, while actual acquisitions refit all instrument data; the hypothetical inference update is approximate.</li><li>Polynomial harmonic balance partitions stationary points numerically; smooth-friction branch isolation uses sampled/refined extrema and has no global lowest-branch guarantee.</li><li>Baseline-orbit harmonic equivalents reused under absorber coupling can miss jumps, hysteresis, transient effects and orbit changes.</li><li>Fixed audit thresholds are uncalibrated engineering diagnostics; represented worlds may fail and omitted memory may pass.</li><li>Equal acquisition counts do not equal computational budgets; all arms archive the same diagnostic candidate calculations.</li><li>Pooled outcomes can hide negative challenge reductions. Narrow grids/protocols and a transient7–14s RMS window do not establish reliability.</li><li>No-absorber recommendation fallback is an experimental control, not a claim that physical operation without an absorber is safe.</li><li>Conceptual limits do not provide manufacturing, fatigue, stress, stability or safety qualification.</li></ul><p>STL/CAD exports are schematic, in millimetres, and not manufacturing specifications.</p>
+<h2>Provenance</h2><pre>{
+  &quot;counterform&quot;: &quot;0.2.0&quot;,
+  &quot;python&quot;: &quot;3.12.10&quot;,
+  &quot;numpy&quot;: &quot;2.4.3&quot;,
+  &quot;scipy&quot;: &quot;1.17.1&quot;,
+  &quot;source_sha256&quot;: &quot;c6111b4f22b3919f1a15cecc35a97406dc93720b0ba7d4ca01f3129e91f5db59&quot;
+}</pre><p>Result SHA-256: <code>f5538fd79b3255c88079849a093f406536b1925ccd705754eeed60d8f3c1233e</code></p>
+<p>Checksums detect changes relative to the manifest; they do not authenticate an author. Use the receipt and CLI replay to recompute numerical evidence.</p></html>

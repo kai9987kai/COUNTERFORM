@@ -10,21 +10,23 @@ import sys
 import zipfile
 
 from . import __version__
-from .evidence import canonical, digest, make_receipt, verify_receipt, verify_bundle, build_bundle, report_html, source_digest
+from .evidence import canonical, digest, make_receipt, verify_receipt, verify_bundle, build_bundle, report_html, source_digest, read_evidence, parse_json
+from .protocols import DEFAULT_PROTOCOL, SUPPORTED_PROTOCOLS, normalize_request, receipt_protocol, replay_result, run_study
 
 
 def load_receipt(path: Path) -> dict:
+    data = read_evidence(path)
     if path.suffix.lower() == '.zip':
-        data = path.read_bytes()
         verify_bundle(data)
         with zipfile.ZipFile(io.BytesIO(data)) as z:
-            return json.loads(z.read('receipt.json'))
-    receipt = json.loads(path.read_text(encoding='utf-8'))
+            return parse_json(z.read('receipt.json'))
+    receipt = parse_json(data)
     verify_receipt(receipt)
     return receipt
 
 
 def save_study(result: dict, output: Path) -> dict:
+    _ensure_output_allowed(output)
     output.mkdir(parents=True, exist_ok=True)
     receipt = make_receipt(result)
     (output / 'receipt.json').write_bytes(canonical(receipt))
@@ -33,9 +35,20 @@ def save_study(result: dict, output: Path) -> dict:
     return receipt
 
 
+def _ensure_output_allowed(output: Path):
+    target = output.resolve()
+    roots = {Path.cwd().resolve(), Path(__file__).resolve().parents[1]}
+    for root in roots:
+        for relative in ('runs/example', 'runs/benchmark', 'paper', 'publications'):
+            protected = (root / relative).resolve()
+            if target == protected or target.is_relative_to(protected):
+                raise ValueError(f'Refusing to overwrite protected historical evidence: {protected}')
+
+
 def study_args(parser):
+    parser.add_argument('--protocol', choices=SUPPORTED_PROTOCOLS, default=DEFAULT_PROTOCOL)
     parser.add_argument('--seed', type=int, default=42)
-    parser.add_argument('--world', choices=['linear', 'cubic', 'friction', 'unmodelled'], default='cubic')
+    parser.add_argument('--world', choices=['linear', 'cubic', 'friction', 'unmodelled', 'memory'], default='cubic')
     parser.add_argument('--strategy', choices=['passive', 'random', 'active', 'counterform'], default='counterform')
     parser.add_argument('--budget', type=int, default=5)
     parser.add_argument('--noise', type=float, default=.01)
@@ -50,16 +63,17 @@ def main(argv=None) -> int:
     serve.add_argument('--runs', type=Path, default=Path('runs/history'))
     run = commands.add_parser('run', help='Compute one study and export evidence')
     study_args(run)
-    run.add_argument('--output', type=Path, default=Path('runs/manual'))
+    run.add_argument('--output', type=Path, default=Path('runs/manual-v02'))
     for name in ('verify', 'replay'):
         cmd = commands.add_parser(name, help='Check evidence integrity' if name == 'verify' else 'Recompute deterministic numerical evidence')
         cmd.add_argument('path', type=Path)
     benchmark = commands.add_parser('benchmark', help='Paired descriptive comparison; no statistical efficacy claim')
+    benchmark.add_argument('--protocol', choices=SUPPORTED_PROTOCOLS, default=DEFAULT_PROTOCOL)
     benchmark.add_argument('--seeds', type=int, nargs='+', default=[11, 23])
-    benchmark.add_argument('--worlds', nargs='+', choices=['linear', 'cubic', 'friction', 'unmodelled'], default=['cubic', 'unmodelled'])
+    benchmark.add_argument('--worlds', nargs='+', choices=['linear', 'cubic', 'friction', 'unmodelled', 'memory'], default=['cubic', 'unmodelled'])
     benchmark.add_argument('--budget', type=int, default=3)
     benchmark.add_argument('--noise', type=float, default=.01)
-    benchmark.add_argument('--output', type=Path, default=Path('runs/benchmark'))
+    benchmark.add_argument('--output', type=Path, default=Path('runs/benchmark-v02'))
     args = parser.parse_args(argv)
     try:
         if args.command == 'serve':
@@ -68,36 +82,46 @@ def main(argv=None) -> int:
             uvicorn.run(create_app(args.runs), host='127.0.0.1', port=args.port, log_level='info')
         elif args.command == 'verify':
             if args.path.suffix.lower() == '.zip':
-                result = verify_bundle(args.path.read_bytes())
+                result = verify_bundle(read_evidence(args.path))
             else:
                 result = verify_receipt(load_receipt(args.path))
             print(json.dumps(result))
         elif args.command == 'replay':
-            from .engine import run_study
             receipt = load_receipt(args.path)
-            actual = run_study(receipt['config'])
+            actual = replay_result(receipt)
             same = digest(canonical(actual)) == receipt['result_sha256']
-            print(json.dumps({'reproduced': same, 'source_matches': source_digest() == receipt['software'].get('source_sha256'), 'expected_sha256': receipt['result_sha256'], 'actual_sha256': digest(canonical(actual)), 'note': 'Exact numerical replay depends on the recorded numerical dependency versions.'}))
+            print(json.dumps({'protocol': receipt_protocol(receipt), 'reproduced': same,
+                              'source_matches': source_digest() == receipt.get('software', {}).get('source_sha256'),
+                              'expected_sha256': receipt['result_sha256'], 'actual_sha256': digest(canonical(actual)),
+                              'note': 'Exact numerical replay depends on the platform and recorded numerical dependency versions. '
+                                      'Package source matching is separate from numerical reproduction.'}))
             return 0 if same else 1
         elif args.command == 'run':
-            from .engine import run_study
-            config = {k: getattr(args, k) for k in ('seed', 'world', 'strategy', 'budget', 'noise')}
+            _ensure_output_allowed(args.output)
+            config = normalize_request({k: getattr(args, k) for k in ('protocol', 'seed', 'world', 'strategy', 'budget', 'noise')})
             result = run_study(config, progress=lambda f, m: print(f'{f:3.0%} {m}', file=sys.stderr))
             save_study(result, args.output)
-            print(json.dumps({'output': str(args.output.resolve()), 'summary': result['summary']}, indent=2))
+            print(json.dumps({'output': str(args.output.resolve()), 'protocol': args.protocol, 'summary': result['summary']}, indent=2))
         elif args.command == 'benchmark':
-            from .engine import run_study
             import numpy as np
+            _ensure_output_allowed(args.output)
+            if len(set(args.seeds)) != len(args.seeds) or len(set(args.worlds)) != len(args.worlds):
+                raise ValueError('Benchmark seeds and worlds must be unique; duplicates are not repeated evidence')
+            if len(args.seeds) > 16 or len(args.seeds) * len(args.worlds) * 4 > 128:
+                raise ValueError('Benchmark exceeds the bounded limit of 16 seeds and 128 studies')
+            plan = [normalize_request(dict(protocol=args.protocol, seed=seed, world=world, strategy=strategy,
+                       budget=args.budget, noise=args.noise)) for world in args.worlds for seed in args.seeds
+                    for strategy in ('passive', 'random', 'active', 'counterform')]
             rows = []
-            for world in args.worlds:
-                for seed in args.seeds:
-                    for strategy in ('passive', 'random', 'active', 'counterform'):
-                        config = dict(seed=seed, world=world, strategy=strategy, budget=args.budget, noise=args.noise)
-                        print(f'{world} / seed {seed} / {strategy}', file=sys.stderr)
-                        result = run_study(config)
-                        save_study(result, args.output / world / str(seed) / strategy)
-                        summary = result['summary']
-                        rows.append({'world': world, 'seed': seed, 'strategy': strategy, 'budget': args.budget, 'noise': args.noise, **{key: summary[key] for key in ('reduction_pct', 'worst_reduction_pct', 'adequate', 'constraint_violations', 'design_rms')}})
+            for config in plan:
+                world, seed, strategy = (config[key] for key in ('world', 'seed', 'strategy'))
+                print(f'{args.protocol} / {world} / seed {seed} / {strategy}', file=sys.stderr)
+                result = run_study(config)
+                save_study(result, args.output / world / str(seed) / strategy)
+                summary = result['summary']
+                rows.append({'protocol': args.protocol, 'world': world, 'seed': seed, 'strategy': strategy,
+                    'budget': args.budget, 'noise': args.noise,
+                    **{key: summary[key] for key in ('reduction_pct', 'worst_reduction_pct', 'adequate', 'constraint_violations', 'design_rms')}})
             args.output.mkdir(parents=True, exist_ok=True)
             with (args.output / 'results.csv').open('w', newline='', encoding='utf-8') as f:
                 writer = csv.DictWriter(f, fieldnames=list(rows[0]))
@@ -108,7 +132,12 @@ def main(argv=None) -> int:
                 for strategy in ('passive', 'random', 'active', 'counterform'):
                     subset = [r for r in rows if r['world'] == world and r['strategy'] == strategy]
                     comparison.append({'world': world, 'strategy': strategy, 'n': len(subset), 'mean_reduction_pct': float(np.mean([r['reduction_pct'] for r in subset])), 'adequacy_passes': sum(r['adequate'] for r in subset), 'constraint_violations': sum(r['constraint_violations'] for r in subset)})
-            report = {'schema': 'counterform.benchmark.v1', 'protocol': {'seeds': args.seeds, 'worlds': args.worlds, 'budget': args.budget, 'noise': args.noise, 'strategies': ['passive', 'random', 'active', 'counterform']}, 'comparisons': comparison, 'notes': ['Descriptive pilot only; no statistical efficacy or novelty claim.', 'Equal acquisition counts and finite design grid, not equal wall-clock computation.', 'Audit/challenge simulations are outside acquisition budget and never used to refit the selected design.']}
+            report = {'schema': 'counterform.benchmark.v2', 'protocol': {'numerical_protocol': args.protocol,
+                'seeds': args.seeds, 'worlds': args.worlds, 'budget': args.budget, 'noise': args.noise,
+                'strategies': ['passive', 'random', 'active', 'counterform']}, 'comparisons': comparison,
+                'notes': ['Descriptive pilot only; no statistical efficacy or novelty claim.',
+                    'Equal acquisition counts and finite design grid, not equal wall-clock computation.',
+                    'Audit/challenge simulations are outside acquisition budget and never used to refit the selected design.']}
             (args.output / 'summary.json').write_bytes(canonical(report))
             print(json.dumps(report, indent=2))
         return 0

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { validPlayback } from './study-data.js';
 
 export function createApparatus(container, onFrame) {
   let renderer;
@@ -47,10 +48,11 @@ export function createApparatus(container, onFrame) {
   const damperBody=cylinder(.1,1,graphite,0,.72,.63), damperRod=cylinder(.038,1,steel,0,.72,.63);
   // Ground markers make displacement and the fixed boundary legible.
   for(let i=0;i<9;i++)box(.014,.005,.16,steel,-4+i, .025,1.6);
-  let data=null,playing=true,speed=1,time=0,elapsed=0,last=performance.now(),lastNotify=0,scale=1;
-  function setData(d){data=d;time=0;const max=Math.max(...d.primary.map(Math.abs),...d.absorber.map(Math.abs),.001);scale=Math.min(20,1/max);playing=true;}
+  let data=null,playing=true,speed=1,time=0,elapsed=0,last=performance.now(),lastNotify=0,scale=1,disposed=false,animationId;
+  function setData(d){data=validPlayback(d)?d:null;time=0;scale=1;playing=!!data;if(data){const max=Math.max(...data.primary.map(Math.abs),...data.absorber.map(Math.abs),.001);scale=Math.min(20,1/max);}}
   function sample(arr,index,mix){return (arr[index]??0)*(1-mix)+(arr[Math.min(index+1,arr.length-1)]??0)*mix;}
   function update(now){
+    if(disposed)return;
     const dt=Math.min((now-last)/1000,.08);last=now;elapsed+=dt;
     let p=0,a=0,base=0,duration=0;
     if(data?.t?.length>1){duration=data.t.at(-1);if(playing)time=(time+dt*speed)%Math.max(duration,.001);let lo=0,hi=data.t.length-1;while(lo<hi-1){const mid=(lo+hi)>>1;if(data.t[mid]<=time)lo=mid;else hi=mid;}const mix=(time-data.t[lo])/(data.t[hi]-data.t[lo]||1);p=sample(data.primary,lo,mix);a=sample(data.absorber,lo,mix);base=sample(data.baseline,lo,mix);}
@@ -61,8 +63,8 @@ export function createApparatus(container, onFrame) {
     damperBody.position.x=start+.8;damperBody.scale.y=1.5;damperRod.position.x=(start+end)/2;damperRod.scale.y=Math.max(.3,end-start);
     controls.update();renderer.render(scene,camera);
     if(now-lastNotify>80){onFrame?.({time,duration,primary:p,absorber:a,baseline:base,scale,playing});lastNotify=now;}
-    requestAnimationFrame(update);
+    animationId=requestAnimationFrame(update);
   }
-  const ro=new ResizeObserver(()=>{const {width,height}=container.getBoundingClientRect();if(!width||!height)return;renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();});ro.observe(container);requestAnimationFrame(update);
-  return {setData,setPlaying(v){playing=v;},setSpeed(v){speed=v;},seek(fraction){if(data)time=Math.max(0,Math.min(1,fraction))*data.t.at(-1);},reset,dispose(){ro.disconnect();controls.dispose();renderer.dispose();}};
+  const ro=new ResizeObserver(()=>{const {width,height}=container.getBoundingClientRect();if(!width||!height)return;renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();});ro.observe(container);animationId=requestAnimationFrame(update);
+  return {setData,setPlaying(v){playing=v;},setSpeed(v){speed=v;},seek(fraction){if(data)time=Math.max(0,Math.min(1,fraction))*data.t.at(-1);},reset,dispose(){disposed=true;cancelAnimationFrame(animationId);ro.disconnect();controls.dispose();scene.traverse(object=>{object.geometry?.dispose();if(Array.isArray(object.material))object.material.forEach(material=>material.dispose());else object.material?.dispose();});renderer.dispose();}};
 }

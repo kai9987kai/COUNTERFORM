@@ -1,0 +1,12 @@
+{
+  "schema": "counterform.study.v1",
+  "name": "v02-decision-risk-development",
+  "protocol": "0.2.0",
+  "prepared_on": "2026-11-03",
+  "purpose": "development",
+  "seeds": [101, 103, 107, 109],
+  "worlds": ["cubic", "unmodelled", "memory"],
+  "strategies": ["passive", "random", "active", "counterform"],
+  "budget": 4,
+  "noise": 0.01
+}

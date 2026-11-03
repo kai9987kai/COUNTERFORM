@@ -1,0 +1,1 @@
+{"budget":4,"name":"v02-decision-risk-development","noise":0.01,"prepared_on":"2026-11-03","protocol":"0.2.0","purpose":"development","schema":"counterform.study.v1","seeds":[101,103,107,109],"strategies":["passive","random","active","counterform"],"worlds":["cubic","unmodelled","memory"]}

@@ -35,7 +35,7 @@ Each cell contains four seeds. Pooled reduction is computed within each run from
 | Memory | Disagreement | 39.11 | −13.60 | 3 | 1 | 4 |
 | Memory | COUNTERFORM | 39.11 | −13.60 | 2 | 2 | 4 |
 
-Across all runs, 28 of 144 challenge conditions worsened RMS displacement. No selected design violated the two declared illustrative displacement/stroke limits. Those limited checks do not establish stability, manufacturing suitability or safety. The maximum independent solver discrepancy was 3.58 × 10⁻⁸, covering only each run's first-challenge baseline and selected displacement trajectories.
+Across all runs, 28 of 144 challenge conditions worsened RMS displacement. No selected design violated the two declared illustrative displacement/stroke limits at sampled output times within 7-14 s. These checks do not bound continuous peaks or the initial 0-7 s trajectory, and do not establish stability, manufacturing suitability or safety. The maximum independent solver discrepancy was 3.58 × 10⁻⁸, covering only each run's first-challenge baseline and selected displacement trajectories.
 
 ## Paired experiment-selection findings
 
@@ -59,7 +59,7 @@ These findings motivate separate future work on identification bias, audit discr
 
 ## Verification and reproduction
 
-Validation used Python 3.12.10, NumPy 2.4.3 and SciPy 1.17.1. The complete Python suite passed 152 tests; 11 frontend checks and the production build passed. Independent science, integration and delivery reviews resulted in regression fixes for oracle feasibility, narrow response roots, malformed comparison settings and missing failure/constraint details in the report. The 82-artifact preservation manifest passed, and an original legacy receipt reproduced numerically while correctly reporting changed package source. A separately installed wheel completed a v0.2 memory study and verified its receipt.
+Validation used Python 3.12.10, NumPy 2.4.3 and SciPy 1.17.1. At the pre-study source freeze, the complete Python suite passed 152 tests; 11 frontend checks and the production build passed. Independent science, integration and delivery reviews resulted in regression fixes for oracle feasibility, narrow response roots, malformed comparison settings and missing failure/constraint details in the report. The 82-artifact preservation manifest passed, and an original legacy receipt reproduced numerically while correctly reporting changed package source. A separately installed wheel completed a v0.2 memory study and verified its receipt.
 
 The frozen plan SHA-256 is `a6ec7a0e6118f56535b3242fd321cd54baa3060ff725edd07b24967424e892cf`. The study's recursive Python source SHA-256 is `c6111b4f22b3919f1a15cecc35a97406dc93720b0ba7d4ca01f3129e91f5db59`. Hashes detect changes relative to these records; they do not authenticate authorship.
 

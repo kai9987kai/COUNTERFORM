@@ -1,0 +1,20 @@
+{
+  "schema": "counterform.publication.v2",
+  "author": "kai9987kai",
+  "date": "2026-11-03",
+  "paper_pages": 10,
+  "source_files_verified": 319,
+  "files": {
+    "counterform_v02_development_paper.pdf": {
+      "sha256": "02f8f0979ced0e798be22aeb40eed6937d29e81fc10b36471c7e6b077e415dc3",
+      "bytes": 420537
+    },
+    "counterform_v02_paper_sources.zip": {
+      "sha256": "745b303447b8c844293eb21ca687b9e7e737284bce19f527f0cec939e8366cfc",
+      "bytes": 24386236
+    }
+  },
+  "study_cases": 48,
+  "study_source_sha256": "c6111b4f22b3919f1a15cecc35a97406dc93720b0ba7d4ca01f3129e91f5db59",
+  "scope": "Synthetic development manuscripts; checksums establish byte correspondence, not authorship authenticity or physical validity."
+}

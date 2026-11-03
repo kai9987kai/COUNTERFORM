@@ -21,7 +21,9 @@ See [the v0.2 method and limitations](docs/research-v02.md), [the change log](CH
 
 The [completed 48-run v0.2 development study](docs/v02-results.md) found different COUNTERFORM/disagreement experiment sequences but identical selected designs and challenge outcomes in all 12 paired cases. It shows no acquisition-performance advantage. The audit also rejected every combined-world run and accepted 7 of 16 omitted-memory runs; its limitations and all negative outcomes remain in the report.
 
-## Paper and reproducibility
+## Papers and reproducibility
+
+The new [v0.2 development paper](publications/v02/counterform_v02_development_paper.pdf), by kai9987kai and dated 3 November 2026, covers the 48-run study, full methods, two figures, comparison tables and every run in its appendix. It retains the negative acquisition finding and joint-audit limitations. The [editable paper and build scripts](paper/v02/), [complete project and paper source ZIP](publications/v02/counterform_v02_paper_sources.zip), and [new publication index](publications/v02/README.md) are included.
 
 Read [COUNTERFORM A Synthetic Pilot Study of Experiment Selection and Model Adequacy](publications/counterform_pilot_paper.pdf), by kai9987kai, dated 2 November 2026. The 12-page paper includes methods, three figures, seven references and all 16 pilot runs, retaining negative results and study limitations.
 
